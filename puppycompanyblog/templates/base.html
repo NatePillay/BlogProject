@@ -9,6 +9,35 @@
         <title></title>
     </head>
     <body>
+        <ul class='nav' >
+            <li class='nav-link'>
+                <a hef="{{url_form('core.index')}}">Home</a>
+            </li>
+            <li> class='nav-link'>
+                <a href="{{url_for('core.info')}}">About</a>
+            </li>
+            <li> class='nav-link'>
+                <a href="{{url_for('core.info')}}">About</a>
+            </li>
+            <li> class='nav-link'>
+                <a href="#">Log Out</a>
+            </li>
+            <li> class='nav-link'>
+                <a href="#">Account</a>
+            </li>
+            <li> class='nav-link'>
+                <a href="#">Create Post</a>
+            </li>
+            <li> class='nav-link'>
+                <a href="#">Log In</a>
+            </li>
+            <li> class='nav-link'>
+                <a href="#">Register</a>
+            </li>
+        </ul>
+    <div class="container">
+        {% block content %}
+    </div>
 
     </body>
 </html>
