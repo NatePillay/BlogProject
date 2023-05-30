@@ -48,4 +48,27 @@ def logout():
 
 
 #account
+@users.route('/account', methods=['GET','POST'])
+@login_required
+def account():
+    form = UpdateUserForm() #update the user profile
+    if form.validate_on_submit():
+        if form.picture.data: #if they actually uploaded user data
+            username = current_user.username
+            pic = add_profile_pic(form.picture.data, username) #add picture to add profile pic function
+            current_user.profile_image = pic
+        current_user.username = form.username.data
+        current_user.email = form.email.data
+        db.session.commit()
+        flash('User Account Updated!')
+        return redirect(url_for('users.account'))
+    elif request.method == "GET":
+        form.username.data = current_user.username
+        form.username.data = current_user.email
+    profile_image = url_for('static', filename='profile_pics/'+current_user.profile_image)
+    return render_template('account.html', profile_image=profile_image, form=form)
+
+
+
+
 #user list of blog posts
