@@ -10,3 +10,4 @@ views.py has home and info view
 
 models.py will hold user model and blog post model
 
+checkout the bootstrap documentation on forms
