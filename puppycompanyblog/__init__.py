@@ -5,6 +5,8 @@ from flask_migrate import Migrate
 from flask_login import LoginManager
 
 app = Flask(__name__)
+app.config['SECRET KEY'] = 'mysecret'
+
 
 ###################
 ## DB SETUP ##
@@ -23,8 +25,6 @@ login_manager = LoginManager()
 
 login_manager.init_app(app)
 login_manager.login_view = 'user.login'
-
-
 
 
 from puppycompanyblog.core.views import core
