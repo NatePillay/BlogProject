@@ -3,6 +3,8 @@ from flask_login import login_user, current_user, logout_user, login_required
 from puppycompanyblog import db #in init.py grab slqalchemy db
 from puppycompanyblog.users.forms import RegistrationForm, LoginForm, UpdateUserForm
 from puppycompanyblog.users.picture_handler import add_profile_pic
+from puppycompanyblog.users.models import User, BlogPost 
+
 
 
 users = Blueprint('users', __name__)
@@ -72,3 +74,10 @@ def account():
 
 
 #user list of blog posts
+@users.route("/<username>")
+def user_posts(username): #pass in username
+    page = request.args.get('page',1,type=int) #grab what page we on 
+    user = User.query.filter_by(username=username).first_or_404() #can grab first user or return 404 error
+    blog_posts = BlogPost.query.filter_by(auther=user).order_by(BlogPost.date.desc()).paginate(page=page,per_page=5)  #ORM sqlalchemy docs for filtering
+    return render_template('user_blog_posts.html', blog_posts=blog_posts, user=user) #render in template
+
