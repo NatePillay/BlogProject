@@ -3,9 +3,8 @@ from flask_login import login_user, current_user, logout_user, login_required
 from puppycompanyblog import db #in init.py grab slqalchemy db
 from puppycompanyblog.users.forms import RegistrationForm, LoginForm, UpdateUserForm
 from puppycompanyblog.users.picture_handler import add_profile_pic
-from puppycompanyblog.users.models import User, BlogPost 
-
-
+from puppycompanyblog.models import User, BlogPost
+from werkzeug.security import generate_password_hash, check_password_hash
 
 users = Blueprint('users', __name__)
 
@@ -15,10 +14,7 @@ def register():
     form = RegistrationForm()
     #user object created below
     if form.validate_on_submit():
-        user = User(email=form.email.data,
-                    username=form.email.data
-                    password=form.password.data)
-
+        user = User(email=form.email.data, username=form.username.data, password=form.password.data)
         db.session.add(user)
         db.session.commit()
         flash('Thanks for registration!') #if form valid on submission we flash this
